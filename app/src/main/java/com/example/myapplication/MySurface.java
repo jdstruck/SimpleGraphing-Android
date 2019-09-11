@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.SurfaceHolder;
@@ -19,7 +20,7 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
         surfaceHolder = getHolder();
 
         paint = new Paint();
-        paint.setColor(Color.RED);
+        paint.setColor(Color.BLACK);
 
         // this.getHolder().setFormat(PixelFormat.TRANSLUCENT);
         // paint.setStyle(Style.FILL);
@@ -36,6 +37,14 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+
+    }
+
+    @Override
+    public void onDraw(Canvas canvas) {
+        canvas.drawLine(200,0,0,200, paint);
+        canvas.drawLine(2000,0,0,200,paint);
+
 
     }
 }
