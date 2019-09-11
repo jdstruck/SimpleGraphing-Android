@@ -43,7 +43,8 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void onDraw(Canvas canvas) {
         canvas.drawLine(200,0,0,200, paint);
-        canvas.drawLine(2000,0,0,200,paint);
+        canvas.drawLine(5000,0,0,200,paint);
+        canvas.drawCircle(100, 100, 400, paint);
 
 
     }
