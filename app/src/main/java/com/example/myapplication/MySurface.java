@@ -21,6 +21,9 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
 
         paint = new Paint();
         paint.setColor(Color.BLACK);
+        paint.setStrokeWidth(20);
+        paint.setAntiAlias(true);
+
 
         // this.getHolder().setFormat(PixelFormat.TRANSLUCENT);
         // paint.setStyle(Style.FILL);
@@ -42,10 +45,9 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void onDraw(Canvas canvas) {
-        canvas.drawLine(200,0,0,200, paint);
-        canvas.drawLine(5000,0,0,200,paint);
-        canvas.drawCircle(100, 100, 400, paint);
-
+        canvas.drawLine(0,100,500,200, paint);
+        canvas.drawLine(0,200,600,400, paint);
+//        canvas.drawCircle(100, 100, 400, paint);
 
     }
 }

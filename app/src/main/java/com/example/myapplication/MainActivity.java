@@ -15,15 +15,25 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getSupportActionBar().hide();
+
         customSurfaceView = new MySurface(getApplicationContext());
 
         customSurfaceView.setBackgroundColor(Color.WHITE);
+//        customSurface
         customSurfaceView.setOnTouchListener(this);
         setContentView(customSurfaceView);
     }
 
+
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
+
+        float x = motionEvent.getX();
+        float y = motionEvent.getY();
+
+        
+
 
         return true;
     }
