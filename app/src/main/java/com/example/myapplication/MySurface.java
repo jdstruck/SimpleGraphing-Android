@@ -21,7 +21,7 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
 
         paint = new Paint();
         paint.setColor(Color.BLACK);
-        paint.setStrokeWidth(20);
+        paint.setStrokeWidth(8);
         paint.setAntiAlias(true);
 
 
@@ -45,9 +45,39 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void onDraw(Canvas canvas) {
-        canvas.drawLine(0,100,500,200, paint);
-        canvas.drawLine(0,200,600,400, paint);
-//        canvas.drawCircle(100, 100, 400, paint);
+
+        drawGraph(canvas);
+
+    }
+
+    private void drawGraph(Canvas canvas) {
+//        surfaceHolder = getHolder();
+//        Canvas canvas = surfaceHolder.lockCanvas();
+        float[] yArr = {600, 500, 800, 200, 400, 450};
+
+        float startX = 0;
+        float startY = 600;
+        float stopX = startX + 100;
+        float stopY = 500;
+        canvas.drawLine(startX, startY, stopX, stopY, paint);
+
+        startX = stopX;
+        startY = 500;
+        stopX = startX + 100;
+        stopY = 800;
+
+        canvas.drawLine(startX, startY, stopX, stopY, paint);
+//        for (int i = 0; i < yArr.length; ++i) {
+//            startY = yArr[i];
+//            stopY = yArr[i+1];
+//            stopX = startX+100;
+//            canvas.drawLine(startX, startY, stopX, stopY, paint);
+//            startX = stopX;
+//
+//        }
+//        surfaceHolder.unlockCanvasAndPost(canvas);
+
+
 
     }
 }
