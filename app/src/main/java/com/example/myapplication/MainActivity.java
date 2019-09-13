@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MotionEvent;
+import android.view.Surface;
+import android.view.SurfaceHolder;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity implements View.OnTouchListener {
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         float x = motionEvent.getX();
         float y = motionEvent.getY();
 
+        customSurfaceView.drawText();
         
 
 

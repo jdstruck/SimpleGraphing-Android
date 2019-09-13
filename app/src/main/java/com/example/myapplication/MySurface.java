@@ -80,4 +80,8 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
 
 
     }
+
+    public void drawText() {
+        System.out.println("drawText");
+    }
 }
