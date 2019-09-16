@@ -55,18 +55,29 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
 //        Canvas canvas = surfaceHolder.lockCanvas();
         float[] yArr = {600, 500, 800, 200, 400, 450};
 
+//        int i = 0;
         float startX = 0;
-        float startY = 600;
-        float stopX = startX + 100;
-        float stopY = 500;
-        canvas.drawLine(startX, startY, stopX, stopY, paint);
+        float startY;
+        float stopX = startX;
+        float stopY; // = yArr[i+1];
+//        canvas.drawLine(startX, startY, stopX, stopY, paint);
+//
+//        ++i;
+//        startX = stopX;
+//        startY = yArr[i];
+//        stopX = startX + 100;
+//        stopY = yArr[i+1];
+//
+//        canvas.drawLine(startX, startY, stopX, stopY, paint);
+//        ++i;
 
-        startX = stopX;
-        startY = 500;
-        stopX = startX + 100;
-        stopY = 800;
-
-        canvas.drawLine(startX, startY, stopX, stopY, paint);
+        for (int i=0; i < 5; ++i) {
+            startX = stopX;
+            startY = yArr[i];
+            stopX = startX + 100;
+            stopY = yArr[i+1];
+            canvas.drawLine(startX, startY, stopX, stopY, paint);
+        }
 //        for (int i = 0; i < yArr.length; ++i) {
 //            startY = yArr[i];
 //            stopY = yArr[i+1];
