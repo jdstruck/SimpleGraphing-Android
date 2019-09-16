@@ -17,76 +17,54 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
     public MySurface(Context context) {
         super(context);
 
+        init();
+
+    }
+
+    private void init() {
         surfaceHolder = getHolder();
 
-        paint = new Paint();
+        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(Color.BLACK);
         paint.setStrokeWidth(8);
-        paint.setAntiAlias(true);
-
-
-        // this.getHolder().setFormat(PixelFormat.TRANSLUCENT);
-        // paint.setStyle(Style.FILL);
     }
-    @Override
-    public void surfaceCreated(SurfaceHolder surfaceHolder) {
 
-    }
 
     @Override
-    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-
-    }
+    public void surfaceCreated(SurfaceHolder surfaceHolder) {}
 
     @Override
-    public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {}
 
-    }
+    @Override
+    public void surfaceDestroyed(SurfaceHolder surfaceHolder) {}
 
     @Override
     public void onDraw(Canvas canvas) {
 
+        super.onDraw(canvas);
         drawGraph(canvas);
 
     }
 
     private void drawGraph(Canvas canvas) {
-//        surfaceHolder = getHolder();
-//        Canvas canvas = surfaceHolder.lockCanvas();
+
         float[] yArr = {600, 500, 800, 200, 400, 450};
 
-//        int i = 0;
         float startX = 0;
-        float startY;
+        float startY = 500;
         float stopX = startX;
         float stopY; // = yArr[i+1];
-//        canvas.drawLine(startX, startY, stopX, stopY, paint);
-//
-//        ++i;
-//        startX = stopX;
-//        startY = yArr[i];
-//        stopX = startX + 100;
-//        stopY = yArr[i+1];
-//
-//        canvas.drawLine(startX, startY, stopX, stopY, paint);
-//        ++i;
 
-        for (int i=0; i < 5; ++i) {
+
+        for (int i=0; i < 1000; ++i) {
             startX = stopX;
-            startY = yArr[i];
-            stopX = startX + 100;
-            stopY = yArr[i+1];
+            startY += i;
+            stopX = startX + 10;
+            stopY = startY + i * i;
             canvas.drawLine(startX, startY, stopX, stopY, paint);
         }
-//        for (int i = 0; i < yArr.length; ++i) {
-//            startY = yArr[i];
-//            stopY = yArr[i+1];
-//            stopX = startX+100;
-//            canvas.drawLine(startX, startY, stopX, stopY, paint);
-//            startX = stopX;
-//
-//        }
-//        surfaceHolder.unlockCanvasAndPost(canvas);
+
 
 
 
