@@ -48,8 +48,17 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     private void drawGraph(Canvas canvas) {
+        double frequency = 500;
+        int duration = 44100;
+        int AMPLITUDE = 10;
 
         float[] yArr = {600, 500, 800, 200, 400, 450};
+        double[] mSound = new double[4410];
+        short[] mBuffer = new short[duration];
+        for (int i = 0; i < mSound.length; i++) {
+            mSound[i] = Math.sin((2.0*Math.PI * i/(44100/frequency)));
+            mBuffer[i] = (short) (mSound[i]*Short.MAX_VALUE);
+        }
 
         float startX = 0;
         float startY = 500;
@@ -57,11 +66,12 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
         float stopY = startY; // = yArr[i+1];
 
 
-        for (int i=0; i < 100; ++i) {
+        //for (int i=0; i < 10000; ++i) {
+        for (double sound: mSound) {
             startX = stopX;
-            stopX = startX + 10;
+            stopX = startX + 1;
             startY = stopY;
-            stopY = startY + i;
+            stopY += sound * AMPLITUDE;
             canvas.drawLine(startX, startY, stopX, stopY, paint);
             System.out.println("startX: " + startX + " stopX: " + stopX + " startY: " + startY + " stopY: " + stopY);
         }
