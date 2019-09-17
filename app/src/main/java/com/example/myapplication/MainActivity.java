@@ -12,6 +12,8 @@ import android.view.View;
 public class MainActivity extends AppCompatActivity implements View.OnTouchListener {
     MySurface customSurfaceView;
 
+    boolean isPlaying = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
+
 
         float x = motionEvent.getX();
         float y = motionEvent.getY();
