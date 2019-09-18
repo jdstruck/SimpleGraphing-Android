@@ -16,6 +16,7 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
     private Paint paint = null;
     private float circleX = 0;
     private float circleY = 0;
+    double frequency;
 
     public MySurface(Context context) {
         super(context);
@@ -46,12 +47,14 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
     public void onDraw(Canvas canvas) {
 
         super.onDraw(canvas);
-        drawGraph(canvas);
+        drawGraph(canvas,1000);
 
     }
 
-    private void drawGraph(Canvas canvas) {
-        double frequency = 1500;
+    public void drawGraph(Canvas canvas, double frequency) {
+        //Canvas canvas = surfaceHolder.lockCanvas();
+        invalidate();
+        this.frequency = frequency;
         int duration = 44100;
         int AMPLITUDE = 1;
 
@@ -62,13 +65,13 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
 
         //float[] yArr = {600, 500, 800, 200, 400, 450};
 
-        int mBufferSize = AudioTrack.getMinBufferSize(44100,
-                AudioFormat.CHANNEL_OUT_MONO,
-                AudioFormat.ENCODING_PCM_8BIT);
-
-        AudioTrack mAudioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, 44100,
-                AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT,
-                mBufferSize, AudioTrack.MODE_STREAM);
+//        int mBufferSize = AudioTrack.getMinBufferSize(44100,
+//                AudioFormat.CHANNEL_OUT_MONO,
+//                AudioFormat.ENCODING_PCM_8BIT);
+//
+//        AudioTrack mAudioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, 44100,
+//                AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT,
+//                mBufferSize, AudioTrack.MODE_STREAM);
 
         double[] mSound = new double[duration];
         short[] mBuffer = new short[duration];
@@ -80,12 +83,12 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
             startY = stopY;
             stopY += mSound[i] * AMPLITUDE;
             canvas.drawLine(startX, startY, stopX, stopY, paint);
-            System.out.println("startX: " + startX + " stopX: " + stopX + " startY: " + startY + " stopY: " + stopY);
+            //System.out.println("startX: " + startX + " stopX: " + stopX + " startY: " + startY + " stopY: " + stopY);
         }
-        mAudioTrack.setStereoVolume(AudioTrack.getMaxVolume(), AudioTrack.getMaxVolume());
-        mAudioTrack.play();
+       // mAudioTrack.setStereoVolume(AudioTrack.getMaxVolume(), AudioTrack.getMaxVolume());
+        //mAudioTrack.play();
 
-        mAudioTrack.write(mBuffer, 0, mSound.length);
+        //mAudioTrack.write(mBuffer, 0, mSound.length);
 
 //        for (int i = 0; i < 10; ++i) {
 //            mAudioTrack.write(mBuffer, 0, mSound.length);
@@ -108,7 +111,7 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
 
 
 
-
+        //surfaceHolder.unlockCanvasAndPost(canvas);
     }
 
     public void drawText() {
