@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.media.audiofx.Visualizer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -40,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         waveFormView.setOnTouchListener(this);
 
         customSurfaceView = new MySurface(getApplicationContext());
-        customSurfaceView.setBackgroundColor(Color.WHITE);
+        //customSurfaceView.setBackgroundColor(Color.WHITE);
         customSurfaceView.setOnTouchListener(this);
         addSeekBar();
         parentLinearLayout.addView(customSurfaceView);
@@ -50,7 +52,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 System.out.println(i);
-                customSurfaceView.drawGraph(new Canvas(),i*100);
+                customSurfaceView.frequency = i + 100;
+                customSurfaceView.drawGraph();
             }
 
             @Override
@@ -76,15 +79,43 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
 
+        // If user touch the custom SurfaceView object.
+        if(view instanceof SurfaceView) {
+            view.invalidate();
 
-        float x = motionEvent.getX();
-        float y = motionEvent.getY();
+            float x = motionEvent.getX();
 
-        customSurfaceView.drawText();
-        
+            float y = motionEvent.getY();
 
+            customSurfaceView.frequency = (x+y)/5;
 
-        return true;
+            customSurfaceView.drawGraph();
+
+            //customSurfaceView.setCircleY(y);
+
+//            if (drawBall) {
+//                // Create and set a red paint to custom surfaceview.
+//                Paint paint = new Paint();
+//                paint.setColor(Color.RED);
+//                customSurfaceView.setPaint(paint);
+//
+//                customSurfaceView.drawLine();
+//            } else {
+//                // Create and set a green paint to custom surfaceview.
+//                Paint paint = new Paint();
+//                paint.setColor(Color.GREEN);
+//                customSurfaceView.setPaint(paint);
+//
+//                customSurfaceView.drawRect();
+//            }
+
+            // Tell android os the onTouch event has been processed.
+            return true;
+        }else
+        {
+            // Tell android os the onTouch event has not been processed.
+            return false;
+        }
     }
 
     private void startVisualizer() {

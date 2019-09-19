@@ -16,7 +16,7 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
     private Paint paint = null;
     private float circleX = 0;
     private float circleY = 0;
-    double frequency;
+    public double frequency = 1000;
 
     public MySurface(Context context) {
         super(context);
@@ -35,33 +35,40 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
 
 
     @Override
-    public void surfaceCreated(SurfaceHolder surfaceHolder) {}
+    public void surfaceCreated(SurfaceHolder surfaceHolder) {
+        drawGraph();
+    }
 
     @Override
     public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {}
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {}
+//
+//    @Override
+//    public void onDraw(Canvas canvas) {
+//
+//        //super.onDraw(canvas);
+//        drawGraph(canvas,1000);
+//
+//    }
 
-    @Override
-    public void onDraw(Canvas canvas) {
-
-        super.onDraw(canvas);
-        drawGraph(canvas,1000);
-
-    }
-
-    public void drawGraph(Canvas canvas, double frequency) {
-        //Canvas canvas = surfaceHolder.lockCanvas();
-        invalidate();
-        this.frequency = frequency;
+    public void drawGraph() {
+        surfaceHolder = getHolder();
+        Canvas canvas = surfaceHolder.lockCanvas();
+//        invalidate();
         int duration = 44100;
         int AMPLITUDE = 1;
 
         float startX = 0;
         float startY = 500;
-        float stopX = startX;
+        float stopX = 0;
         float stopY = startY; // = yArr[i+1];
+        Paint surfaceBackground = new Paint();
+        // Set the surfaceview background color.
+        surfaceBackground.setColor(Color.WHITE);
+        // Draw the surfaceview background color.
+        canvas.drawRect(0, 0, this.getWidth(), this.getHeight(), surfaceBackground);
 
         //float[] yArr = {600, 500, 800, 200, 400, 450};
 
@@ -73,6 +80,8 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
 //                AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT,
 //                mBufferSize, AudioTrack.MODE_STREAM);
 
+        canvas.drawLine(startX, startY, stopX, stopY, paint);
+//
         double[] mSound = new double[duration];
         short[] mBuffer = new short[duration];
         for (int i = 0; i < mSound.length; i++) {
@@ -96,22 +105,7 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
         //mAudioTrack.stop();
         //mAudioTrack.release();
 
-
-
-//
-//        //for (int i=0; i < 10000; ++i) {
-//        for (double sound: mSound) {
-//            startX = stopX;
-//            stopX = startX + 1;
-//            startY = stopY;
-//            stopY += sound * AMPLITUDE;
-//            canvas.drawLine(startX, startY, stopX, stopY, paint);
-//            System.out.println("startX: " + startX + " stopX: " + stopX + " startY: " + startY + " stopY: " + stopY);
-//        }
-
-
-
-        //surfaceHolder.unlockCanvasAndPost(canvas);
+        surfaceHolder.unlockCanvasAndPost(canvas);
     }
 
     public void drawText() {
