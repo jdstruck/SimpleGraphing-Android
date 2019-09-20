@@ -14,9 +14,9 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
 
     private SurfaceHolder surfaceHolder = null;
     private Paint paint = null;
-    private float circleX = 0;
-    private float circleY = 0;
-    public float frequency = 1000;
+    public float xCoord = 0;
+    public float yCoord = 0;
+    public float frequency = 0;
     public float amplitude;
 
     public MySurface(Context context) {
@@ -58,13 +58,18 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
         surfaceHolder = getHolder();
         Canvas canvas = surfaceHolder.lockCanvas();
         int duration = this.getWidth();
-        float startY = this.getHeight()/2.0f - (Math.abs(amplitude - getHeight()))/2.0f;
-        amplitude = (frequency / getHeight()) * (Math.abs(amplitude - getHeight())/10);
+
+        frequency = 1000 * (xCoord / this.getWidth());
 
         float startX = 0;
-
+        float startY = ((canvas.getHeight()/2.0f) - (Math.abs(yCoord - canvas.getHeight()))/2.5f);
         float stopX = 0;
         float stopY = startY; // = yArr[i+1];
+
+        amplitude = (frequency / canvas.getHeight()) * (Math.abs(yCoord - canvas.getHeight())/10);
+
+
+
         Paint surfaceBackground = new Paint();
         // Set the surfaceview background color.
         surfaceBackground.setColor(Color.WHITE);

@@ -95,8 +95,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
             float y = motionEvent.getY();
 
-            customSurfaceView.frequency = x;
-            customSurfaceView.amplitude = y;
+            customSurfaceView.xCoord = x;
+            customSurfaceView.yCoord = y;
 
             customSurfaceView.drawGraph();
 
