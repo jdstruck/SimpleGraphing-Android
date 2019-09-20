@@ -92,18 +92,18 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
         double[] mSound = new double[duration];
         short[] mBuffer = new short[duration];
         for (int i = 0; i < mSound.length; i++) {
-            mSound[i] = Math.sin((2.0*Math.PI * i/(44100/frequency)));
-            mBuffer[i] = (short) (mSound[i]*Short.MAX_VALUE);
+            mSound[i] = amplitude * Math.sin((2.0*Math.PI *i/(44100/frequency))); //y = A sin(B(x + C)) + D
+            //mBuffer[i] = (short) (mSound[i]*Short.MAX_VALUE);
             startX = stopX;
             stopX = startX + 1f;
             startY = stopY;
-            stopY += mSound[i]*amplitude;
+            stopY += mSound[i];
             canvas.drawLine(startX, startY, stopX, stopY, paint);
             System.out.println(//"startX: " + startX + " stopX: " + stopX +
                     " startY: " + (startY-(this.getHeight()/2))+
                     " stopY: " + (stopY-(this.getHeight()/2)) +
                     " getHeight: " + getHeight() +
-                    " amp: " + amplitude + " freq: " + frequency);
+                    " amp: " + frequency/amplitude + " freq: " + frequency);
         }
        // mAudioTrack.setStereoVolume(AudioTrack.getMaxVolume(), AudioTrack.getMaxVolume());
         //mAudioTrack.play();
