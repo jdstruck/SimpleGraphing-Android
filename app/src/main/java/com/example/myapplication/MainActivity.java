@@ -44,28 +44,28 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         customSurfaceView = new MySurface(getApplicationContext());
         //customSurfaceView.setBackgroundColor(Color.WHITE);
         customSurfaceView.setOnTouchListener(this);
-        addSeekBar();
+        //addSeekBar();
         parentLinearLayout.addView(customSurfaceView);
         //setContentView(customSurfaceView);
-        final SeekBar seekBar = findViewById(R.id.seekBar);
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                System.out.println(i);
-                customSurfaceView.frequency = i + 100;
-                customSurfaceView.drawGraph();
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
+        //final SeekBar seekBar = findViewById(R.id.seekBar);
+//        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+//            @Override
+//            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+//                System.out.println(i);
+//                customSurfaceView.frequency = i + 100;
+//                customSurfaceView.drawGraph();
+//            }
+//
+//            @Override
+//            public void onStartTrackingTouch(SeekBar seekBar) {
+//
+//            }
+//
+//            @Override
+//            public void onStopTrackingTouch(SeekBar seekBar) {
+//
+//            }
+//        });
     }
 
     private void addSeekBar() {
@@ -75,6 +75,14 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         // Add the new row before the add field button.
         parentLinearLayout.addView(seekBarView, parentLinearLayout.getChildCount() - 1);
     }
+    private void addCoordTextView() {
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        assert inflater != null;
+        final View seekBarView = inflater.inflate(R.layout.coord_text_view, null);
+        // Add the new row before the add field button.
+        parentLinearLayout.addView(seekBarView, parentLinearLayout.getChildCount() - 1);
+    }
+
 
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -87,7 +95,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
             float y = motionEvent.getY();
 
-            customSurfaceView.frequency = (x+y)/5;
+            customSurfaceView.frequency = x;
+            customSurfaceView.amplitude = y;
 
             customSurfaceView.drawGraph();
 

@@ -16,7 +16,8 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
     private Paint paint = null;
     private float circleX = 0;
     private float circleY = 0;
-    public double frequency = 1000;
+    public float frequency = 1000;
+    public float amplitude;
 
     public MySurface(Context context) {
         super(context);
@@ -56,12 +57,12 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
     public void drawGraph() {
         surfaceHolder = getHolder();
         Canvas canvas = surfaceHolder.lockCanvas();
-//        invalidate();
-        int duration = 44100;
-        int AMPLITUDE = 1;
+        int duration = this.getWidth();
+        float startY = this.getHeight()/2.0f - (Math.abs(amplitude - getHeight()))/2.0f;
+        amplitude = (frequency / getHeight()) * (Math.abs(amplitude - getHeight())/10);
 
         float startX = 0;
-        float startY = 500;
+
         float stopX = 0;
         float stopY = startY; // = yArr[i+1];
         Paint surfaceBackground = new Paint();
@@ -80,19 +81,24 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
 //                AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT,
 //                mBufferSize, AudioTrack.MODE_STREAM);
 
-        canvas.drawLine(startX, startY, stopX, stopY, paint);
-//
+        //canvas.drawLine(startX, startY, stopX, stopY, paint);
+
+
         double[] mSound = new double[duration];
         short[] mBuffer = new short[duration];
         for (int i = 0; i < mSound.length; i++) {
             mSound[i] = Math.sin((2.0*Math.PI * i/(44100/frequency)));
             mBuffer[i] = (short) (mSound[i]*Short.MAX_VALUE);
             startX = stopX;
-            stopX = startX + 1;
+            stopX = startX + 1f;
             startY = stopY;
-            stopY += mSound[i] * AMPLITUDE;
+            stopY += mSound[i]*amplitude;
             canvas.drawLine(startX, startY, stopX, stopY, paint);
-            //System.out.println("startX: " + startX + " stopX: " + stopX + " startY: " + startY + " stopY: " + stopY);
+            System.out.println(//"startX: " + startX + " stopX: " + stopX +
+                    " startY: " + (startY-(this.getHeight()/2))+
+                    " stopY: " + (stopY-(this.getHeight()/2)) +
+                    " getHeight: " + getHeight() +
+                    " amp: " + amplitude + " freq: " + frequency);
         }
        // mAudioTrack.setStereoVolume(AudioTrack.getMaxVolume(), AudioTrack.getMaxVolume());
         //mAudioTrack.play();
