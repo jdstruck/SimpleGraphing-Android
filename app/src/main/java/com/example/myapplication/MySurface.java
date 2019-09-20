@@ -14,6 +14,7 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
 
     private SurfaceHolder surfaceHolder = null;
     private Paint paint = null;
+    private Paint gridline = null;
     public float xCoord = 0;
     public float yCoord = 0;
     public float frequency = 0;
@@ -31,13 +32,18 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
 
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(Color.BLACK);
-        paint.setStrokeWidth(8);
+        paint.setStrokeWidth(4);
+
+        gridline = new Paint(Paint.ANTI_ALIAS_FLAG);
+        gridline.setColor(Color.BLUE);
+        gridline.setStrokeWidth(1);
+        //setBackgroundColor(Color.WHITE);
     }
 
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
-        drawGraph();
+        //drawGraph();
     }
 
     @Override
@@ -45,14 +51,14 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {}
-//
-//    @Override
-//    public void onDraw(Canvas canvas) {
-//
-//        //super.onDraw(canvas);
-//        drawGraph(canvas,1000);
-//
-//    }
+
+    @Override
+    public void onDraw(Canvas canvas) {
+
+        //super.onDraw(canvas);
+        drawGraph();
+
+    }
 
     public void drawGraph() {
         surfaceHolder = getHolder();
@@ -62,7 +68,7 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
         frequency = 1000 * (xCoord / this.getWidth());
 
         float startX = 0;
-        float startY = ((canvas.getHeight()/2.0f) - (Math.abs(yCoord - canvas.getHeight()))/2.5f);
+        float startY = ((canvas.getHeight()/2.0f) - (Math.abs(yCoord - canvas.getHeight()))/2.75f);
         float stopX = 0;
         float stopY = startY; // = yArr[i+1];
 
@@ -76,23 +82,13 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
         // Draw the surfaceview background color.
         canvas.drawRect(0, 0, this.getWidth(), this.getHeight(), surfaceBackground);
 
-        //float[] yArr = {600, 500, 800, 200, 400, 450};
-
-//        int mBufferSize = AudioTrack.getMinBufferSize(44100,
-//                AudioFormat.CHANNEL_OUT_MONO,
-//                AudioFormat.ENCODING_PCM_8BIT);
-//
-//        AudioTrack mAudioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, 44100,
-//                AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT,
-//                mBufferSize, AudioTrack.MODE_STREAM);
-
-        //canvas.drawLine(startX, startY, stopX, stopY, paint);
-
-
+        canvas.drawLine(0, getHeight()/2, getWidth(),getHeight()/2, gridline);
         double[] mSound = new double[duration];
         short[] mBuffer = new short[duration];
         for (int i = 0; i < mSound.length; i++) {
-            mSound[i] = amplitude * Math.sin((2.0*Math.PI *i/(44100/frequency))); //y = A sin(B(x + C)) + D
+            float A = amplitude;
+            double B = Math.sin(2.0*Math.PI * i/(44100/frequency));
+            mSound[i] = A * Math.sin(B); //y = A sin(B(x + C)) + D
             //mBuffer[i] = (short) (mSound[i]*Short.MAX_VALUE);
             startX = stopX;
             stopX = startX + 1f;
