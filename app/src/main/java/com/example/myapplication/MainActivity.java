@@ -21,6 +21,10 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     boolean isPlaying = false;
     private Visualizer visualizer;
     private WaveFormView waveFormView;
+    TextView freq_tv;
+    TextView amp_tv;
+    TextView xCoord_tv;
+    TextView yCoord_tv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,13 +36,19 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
         this.parentLinearLayout = (LinearLayout) findViewById(R.id.parentLinearLayout);
 
+        this.freq_tv = findViewById(R.id.freq);
+        this.amp_tv = findViewById(R.id.amp);
+        this.xCoord_tv = findViewById(R.id.xCoord);
+        this.yCoord_tv = findViewById(R.id.yCoord);
+
         customSurfaceView = new MySurface(getApplicationContext());
         //customSurfaceView.setBackgroundColor(Color.WHITE);
 
-        //addSeekBar();
+        //addCoordTextView();
         parentLinearLayout.addView(customSurfaceView);
         customSurfaceView.setOnTouchListener(this);
         customSurfaceView.setWillNotDraw(false);
+        updateText(new float[]{0, 1800, 0, 0});
     }
 
     private void addSeekBar() {
@@ -68,11 +78,24 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             customSurfaceView.xCoord = x;
             customSurfaceView.yCoord = y;
 
-            customSurfaceView.drawGraph();
+
+
+            float[] data = customSurfaceView.drawGraph();
+            updateText(data);
+
+
 
             return true;
         }else {
             return false;
         }
+    }
+    private void updateText(float[] data) {
+
+        this.xCoord_tv.setText(String.format("x: %s", data[0]));
+        this.yCoord_tv.setText(String.format("y: %s", data[1]));
+        this.amp_tv.setText(String.format("amp: %s", data[2]));
+        this.freq_tv.setText(String.format("freq: %s", data[3]));
+
     }
 }

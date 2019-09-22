@@ -9,16 +9,15 @@ import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.TextView;
 
 public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
 
     private SurfaceHolder surfaceHolder = null;
     private Paint paint = null;
     private Paint gridline = null;
-    public float xCoord = 0;
-    public float yCoord = 0;
-    public float frequency = 0;
-    public float amplitude;
+    public float xCoord, yCoord, frequency, amplitude;
+    TextView freq_tv, amp_tv, xCoord_tv, yCoord_tv;
 
     public MySurface(Context context) {
         super(context);
@@ -37,6 +36,11 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
         gridline = new Paint(Paint.ANTI_ALIAS_FLAG);
         gridline.setColor(Color.BLUE);
         gridline.setStrokeWidth(1);
+
+        xCoord = 0;
+        yCoord = 1800;
+
+
         //setBackgroundColor(Color.WHITE);
     }
 
@@ -56,11 +60,13 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
     public void onDraw(Canvas canvas) {
 
         //super.onDraw(canvas);
+
         drawGraph();
 
     }
 
-    public void drawGraph() {
+    public float[] drawGraph() {
+
         surfaceHolder = getHolder();
         Canvas canvas = surfaceHolder.lockCanvas();
         int duration = this.getWidth();
@@ -73,8 +79,6 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
         float stopY = startY; // = yArr[i+1];
 
         amplitude = (frequency / canvas.getHeight()) * (Math.abs(yCoord - canvas.getHeight())/10);
-
-
 
         Paint surfaceBackground = new Paint();
         // Set the surfaceview background color.
@@ -99,8 +103,12 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
                     " startY: " + (startY-(this.getHeight()/2))+
                     " stopY: " + (stopY-(this.getHeight()/2)) +
                     " getHeight: " + getHeight() +
-                    " amp: " + frequency/amplitude + " freq: " + frequency);
+                    " amp: " + frequency/amplitude + " freq: " + frequency +
+                    " xCoord: " + xCoord + " yCoord: " + yCoord);
         }
+
+
+
        // mAudioTrack.setStereoVolume(AudioTrack.getMaxVolume(), AudioTrack.getMaxVolume());
         //mAudioTrack.play();
 
@@ -113,6 +121,7 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
         //mAudioTrack.release();
 
         surfaceHolder.unlockCanvasAndPost(canvas);
+        return new float[]{xCoord, yCoord, amplitude, frequency};
     }
 
     public void drawText() {
