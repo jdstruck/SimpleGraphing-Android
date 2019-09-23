@@ -5,7 +5,7 @@ Visualize sine wave. Change frequency and amplitude by swiping horizontally and 
 ## Project Goals
 For this implementation, my goals were as follows:
 - [x] Visualize sine wave, manipulate parameters with onTouch
-- [] Play audio sample stored in buffer
+- [ ] Play audio sample stored in buffer
 
 Originally I'd intended to not only enable dynamic manipulation of the visual representation of the sine wave, but play the same sample using an AudioTrack object.
 
